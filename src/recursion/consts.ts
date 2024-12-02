@@ -1,4 +1,8 @@
-export const tree2 = {
+export type Category2 = {
+  name: string;
+  children?: Category2[];
+};
+export const tree2: Category2 = {
   name: "John",
   children: [
     { name: "Jim", children: [] },

@@ -1,6 +1,6 @@
 import { tree3, type Category3 } from "./consts";
 
-function returnChildrenName(tree: Category3[]): string[] {
+function returnChildrenNames(tree: Category3[]): string[] {
   const childrenNames: string[] = [];
 
   function traverse(node: Category3): void {
@@ -19,4 +19,4 @@ function returnChildrenName(tree: Category3[]): string[] {
   return childrenNames;
 }
 
-console.log(returnChildrenName(tree3));
+console.log(returnChildrenNames(tree3));

@@ -1,4 +1,4 @@
-function sumRange(n) {
+function sumRange(n: number) {
   let total = 0;
 
   for (let i = n; i > 0; i--) {
@@ -9,7 +9,7 @@ function sumRange(n) {
 
 // sumRange(3);
 
-function sumRangeRecursion(n, total = 0) {
+function sumRangeRecursion(n: number, total = 0) {
   if (n <= 0) {
     console.log(total);
     return;

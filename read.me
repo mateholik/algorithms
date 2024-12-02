@@ -1,2 +1,3 @@
-tsc
-node compiled/fe.js
+npm install -g nodemon
+npm install -g typescript
+nodemon --watch 'src/**/*.ts' --exec 'tsc && node compiled/recursion/flattenTree.js' --ext ts
