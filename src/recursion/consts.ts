@@ -33,7 +33,6 @@ export const tree3: Category3[] = [
   {
     name: "category_1",
     id: 1,
-
     children: [
       { name: "category_1_1", id: 11, linkedCategory: 2 },
       {

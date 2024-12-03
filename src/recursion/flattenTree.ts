@@ -4,9 +4,8 @@ const flattenTree = (tree: Category3[]): Category3[] => {
   let result: Category3[] = [];
 
   const traverse = (node: Category3): void => {
-    if (!node) return;
-    result.push({ name: node?.name || "nera", id: node?.id || 420 });
-    if (!node?.children) return;
+    result.push({ name: node.name, id: node.id });
+    if (!node.children) return;
 
     for (let i = 0; i < node.children.length; i++) {
       traverse(node.children[i]);

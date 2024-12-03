@@ -4,10 +4,8 @@ const consts_1 = require("./consts");
 const flattenTree = (tree) => {
     let result = [];
     const traverse = (node) => {
-        if (!node)
-            return;
-        result.push({ name: (node === null || node === void 0 ? void 0 : node.name) || "nera", id: (node === null || node === void 0 ? void 0 : node.id) || 420 });
-        if (!(node === null || node === void 0 ? void 0 : node.children))
+        result.push({ name: node.name, id: node.id });
+        if (!node.children)
             return;
         for (let i = 0; i < node.children.length; i++) {
             traverse(node.children[i]);
