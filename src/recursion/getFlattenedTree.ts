@@ -1,6 +1,6 @@
 import { tree3, type Category3 } from "./consts";
 
-const flattenTree = (tree: Category3[]): Category3[] => {
+const getFlattenedTree = (tree: Category3[]): Category3[] => {
   let result: Category3[] = [];
 
   const traverse = (node: Category3): void => {
@@ -19,4 +19,4 @@ const flattenTree = (tree: Category3[]): Category3[] => {
   return result;
 };
 
-console.log(flattenTree(tree3));
+console.log(getFlattenedTree(tree3));

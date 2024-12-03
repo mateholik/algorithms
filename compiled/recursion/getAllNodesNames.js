@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts_1 = require("./consts");
-function getAllCategoryNames(tree) {
+function getAllNodesNames(tree) {
     const names = [];
     function traverse(node) {
         names.push(node.name);
@@ -16,4 +16,4 @@ function getAllCategoryNames(tree) {
     }
     return names;
 }
-console.log(getAllCategoryNames(consts_1.tree3));
+console.log(getAllNodesNames(consts_1.tree3));
