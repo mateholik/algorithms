@@ -1,14 +1,14 @@
 "use strict";
 // function calculateDepth(tree: TreeNode[]): number {
-//   let maxDepth = 0;
+//   let maxDepthAmongChildren = 0;
 //   for (const node of tree) {
 //     if (node.children) {
 //       const depth = calculateDepth(node.children);
-//       if (depth > maxDepth) {
-//         maxDepth = depth;
+//       if (depth > maxDepthAmongChildren) {
+//         maxDepthAmongChildren = depth;
 //       }
 //     }
 //   }
-//   return maxDepth + 1;
+//   return maxDepthAmongChildren + 1;
 // }
 // // console.log(calculateDepth(tree));
