@@ -7,4 +7,4 @@ export const deepCloneTree = (tree: Category3[]): Category3[] => {
   }));
 };
 
-console.log(JSON.stringify(deepCloneTree(tree3) === tree3));
+// console.log("deepCloneTree2", JSON.stringify(deepCloneTree(tree3), null, 2));

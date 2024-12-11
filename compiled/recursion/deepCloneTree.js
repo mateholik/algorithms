@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deepCloneTree = void 0;
-const consts_1 = require("./consts");
 const deepCloneTree = (tree) => {
     return tree.map((node) => {
         var _a;
@@ -9,4 +8,4 @@ const deepCloneTree = (tree) => {
     });
 };
 exports.deepCloneTree = deepCloneTree;
-console.log(JSON.stringify((0, exports.deepCloneTree)(consts_1.tree3) === consts_1.tree3));
+// console.log("deepCloneTree2", JSON.stringify(deepCloneTree(tree3), null, 2));
