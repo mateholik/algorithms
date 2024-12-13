@@ -27,6 +27,7 @@ export type Category3 = {
   children?: Category3[];
   id: number;
   linkedCategory?: number;
+  parentId?: number;
 };
 
 export const tree3: Category3[] = [
