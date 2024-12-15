@@ -1,27 +1,3 @@
-export type Category2 = {
-  name: string;
-  children?: Category2[];
-};
-export const tree2: Category2 = {
-  name: "John",
-  children: [
-    { name: "Jim", children: [] },
-    {
-      name: "Zoe",
-      children: [
-        {
-          name: "Kyle",
-          children: [],
-        },
-        {
-          name: "Sophia",
-          children: [],
-        },
-      ],
-    },
-  ],
-};
-
 export type Category3 = {
   name: string;
   children?: Category3[];

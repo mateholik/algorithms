@@ -237,7 +237,51 @@ export const deleteNodeByUniqueId3 = (
   return result;
 };
 
-console.log(
-  "deleteNodeByUniqueId3",
-  JSON.stringify(deleteNodeByUniqueId3(tree3, 12), null, 2)
-);
+// console.log(
+//   "deleteNodeByUniqueId3",
+//   JSON.stringify(deleteNodeByUniqueId3(tree3, 11), null, 2)
+// );
+
+export const getAllNodeNames = (tree: Category3[]): string[] => {
+  let result: string[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    result.push(tree[i].name);
+    if (tree[i].children) {
+      result = [...result, ...getAllNodeNames(tree[i].children as Category3[])];
+    }
+  }
+  return result;
+};
+
+// console.log("getAllNodeNames", getAllNodeNames(tree3));
+
+export const getChildrenNodeNames = (tree: Category3[]): string[] => {
+  let result: string[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].children) {
+      const childrenNames = getAllNodeNames(tree[i].children as Category3[]);
+      result = [...result, ...childrenNames];
+    }
+  }
+
+  return result;
+};
+
+// console.log("getChildrenNodeNames", getChildrenNodeNames(tree3));
+
+export const getDepthOfTree = (tree: Category3[]): number => {
+  let maxDepth: number = 0;
+
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].children) {
+      const branchDepth = getDepthOfTree(tree[i].children as Category3[]);
+      if (branchDepth > maxDepth) maxDepth = branchDepth;
+    }
+  }
+
+  return maxDepth + 1;
+};
+
+console.log("getDepthOfTree", getDepthOfTree(tree3));

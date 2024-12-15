@@ -5,7 +5,7 @@ type Category = {
   linkedCategory?: number;
 };
 
-const tree: Category[] = [
+const originalTree: Category[] = [
   {
     name: "category_1",
     id: 1,
@@ -40,102 +40,46 @@ const tree: Category[] = [
   },
 ];
 
-function categoryById(tree: Category[], id: number): Category | undefined {
-  for (const category of tree) {
-    if (category.id === id) return category;
-    if (category.children) {
-      const result = categoryById(category.children, id);
-      if (result) return result;
+function findNodeById(tree: Category[], id: number): Category | undefined {
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].id === id) return tree[i];
+    if (tree[i].children) {
+      const match = findNodeById(tree[i].children as Category[], id);
+      if (match) return match;
     }
   }
   return undefined;
 }
 
+// console.log("findNodeById", JSON.stringify(findNodeById(originalTree, 311), null, 2));
+
 function deleteByUniqId(tree: Category[], id: number): Category[] {
+  let result: Category[] = [];
+
   for (let i = 0; i < tree.length; i++) {
-    const category = tree[i];
-    if (category.id === id) {
-      if (category.linkedCategory !== undefined) {
-        const isLinked = categoryById(tree, category.linkedCategory);
+    if (tree[i].id === id) {
+      const isUnique = tree[i].linkedCategory
+        ? findNodeById(originalTree, tree[i].linkedCategory as number) ===
+          undefined
+        : true;
 
-        if (isLinked === undefined) {
-          tree.splice(i, 1);
-          return tree;
-        }
-      } else {
-        tree.splice(i, 1);
-        return tree;
+      if (!isUnique) {
+        result.push({ ...tree[i] });
       }
-    } else if (category.children) {
-      const children = deleteByUniqId(category.children, id);
-      if (children !== undefined) category.children = children;
-    }
-  }
-  return tree;
-}
-
-function deleteByUniqId2(
-  tree: Category[],
-  id: number,
-  originalTree: Category[] = tree
-): Category[] {
-  for (let i = 0; i < tree.length; i++) {
-    const category = tree[i];
-    console.log(
-      "Current Category:",
-      category.name,
-      "| ID:",
-      category.id,
-      "| Looking for ID:",
-      id
-    );
-
-    if (category.id === id) {
-      console.log("Matched ID:", id);
-
-      if (category.linkedCategory !== undefined) {
-        console.log("Category has linkedCategory:", category.linkedCategory);
-        // Search the entire original tree for the linked category
-        const isLinked = categoryById(originalTree, category.linkedCategory);
-
-        if (isLinked !== undefined) {
-          console.log(
-            "Linked category exists. Not deleting category with ID:",
-            id
-          );
-          return tree;
-        } else {
-          console.log(
-            "Linked category does not exist. Deleting category with ID:",
-            id
-          );
-          tree.splice(i, 1);
-          return tree;
-        }
-      } else {
-        console.log("No linkedCategory. Deleting category with ID:", id);
-        tree.splice(i, 1);
-        return tree;
-      }
-    } else if (category.children) {
-      console.log("Going deeper into children of category:", category.name);
-      const updatedChildren = deleteByUniqId2(
-        category.children,
-        id,
-        originalTree
-      );
-      if (updatedChildren.length !== category.children.length) {
-        console.log("Updated children of category:", category.name);
-      }
-      category.children = updatedChildren;
     } else {
-      console.log("No match at current level for category:", category.name);
+      result.push({
+        ...tree[i],
+        children: tree[i].children
+          ? deleteByUniqId(tree[i].children as Category[], id)
+          : undefined,
+      });
     }
   }
-  console.log("End of loop for current tree level. Returning tree.");
-  return tree; // Ensure the tree is always returned
+
+  return result;
 }
 
-const test = deleteByUniqId2(tree, 31);
-
-console.log("Resulting Tree:", JSON.stringify(test, null, 2));
+console.log(
+  "deleteByUniqId",
+  JSON.stringify(deleteByUniqId(originalTree, 12), null, 2)
+);

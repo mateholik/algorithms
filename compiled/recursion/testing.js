@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteNodeByUniqueId3 = exports.deleteNodeById3 = exports.findNodeById3 = exports.deepCloneTree2 = exports.revertFlatTree3 = exports.flattenTree6 = exports.flattenTree4 = exports.revertFlattenTree2 = exports.revertFlattenTree = exports.getFlattenTree2 = exports.getFlattenTree = void 0;
+exports.getDepthOfTree = exports.getChildrenNodeNames = exports.getAllNodeNames = exports.deleteNodeByUniqueId3 = exports.deleteNodeById3 = exports.findNodeById3 = exports.deepCloneTree2 = exports.revertFlatTree3 = exports.flattenTree6 = exports.flattenTree4 = exports.revertFlattenTree2 = exports.revertFlattenTree = exports.getFlattenTree2 = exports.getFlattenTree = void 0;
 const consts_1 = require("./consts");
 const getFlattenTree = (tree, parentId) => {
     let result = [];
@@ -184,4 +184,44 @@ const deleteNodeByUniqueId3 = (tree, id) => {
     return result;
 };
 exports.deleteNodeByUniqueId3 = deleteNodeByUniqueId3;
-console.log("deleteNodeByUniqueId3", JSON.stringify((0, exports.deleteNodeByUniqueId3)(consts_1.tree3, 12), null, 2));
+// console.log(
+//   "deleteNodeByUniqueId3",
+//   JSON.stringify(deleteNodeByUniqueId3(tree3, 11), null, 2)
+// );
+const getAllNodeNames = (tree) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        result.push(tree[i].name);
+        if (tree[i].children) {
+            result = [...result, ...(0, exports.getAllNodeNames)(tree[i].children)];
+        }
+    }
+    return result;
+};
+exports.getAllNodeNames = getAllNodeNames;
+// console.log("getAllNodeNames", getAllNodeNames(tree3));
+const getChildrenNodeNames = (tree) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        if (tree[i].children) {
+            const childrenNames = (0, exports.getAllNodeNames)(tree[i].children);
+            result = [...result, ...childrenNames];
+        }
+    }
+    return result;
+};
+exports.getChildrenNodeNames = getChildrenNodeNames;
+// console.log("getChildrenNodeNames", getChildrenNodeNames(tree3));
+const getDepthOfTree = (tree) => {
+    let maxDepth = 0;
+    for (let i = 0; i < tree.length; i++) {
+        if (tree[i].children) {
+            const branchDepth = (0, exports.getDepthOfTree)(tree[i].children);
+            if (branchDepth > maxDepth)
+                maxDepth = branchDepth;
+        }
+    }
+    return maxDepth + 1;
+};
+exports.getDepthOfTree = getDepthOfTree;
+console.log("getDepthOfTree", (0, exports.getDepthOfTree)(consts_1.tree3));

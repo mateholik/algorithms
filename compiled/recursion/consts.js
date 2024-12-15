@@ -1,25 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tree3 = exports.tree2 = void 0;
-exports.tree2 = {
-    name: "John",
-    children: [
-        { name: "Jim", children: [] },
-        {
-            name: "Zoe",
-            children: [
-                {
-                    name: "Kyle",
-                    children: [],
-                },
-                {
-                    name: "Sophia",
-                    children: [],
-                },
-            ],
-        },
-    ],
-};
+exports.tree3 = void 0;
 exports.tree3 = [
     {
         name: "category_1",
