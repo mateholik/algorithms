@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDepthOfTree = void 0;
 const consts_1 = require("./consts");
-// function getDepthOfTree(tree: Category3[]): number {
+// function getDepthOfTree(tree: Category[]): number {
 //   let maxDepthAmongChildren = 0;
 //   for (const node of tree) {
 //     if (node.children) {
@@ -36,4 +36,4 @@ const getDepthOfTree = (tree) => {
     return depthOflongestNode;
 };
 exports.getDepthOfTree = getDepthOfTree;
-console.log((0, exports.getDepthOfTree)(consts_1.tree3));
+console.log((0, exports.getDepthOfTree)(consts_1.tree));

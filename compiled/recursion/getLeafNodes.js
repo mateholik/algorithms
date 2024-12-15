@@ -20,4 +20,4 @@ const getLeafNodes = (tree) => {
     return result;
 };
 exports.getLeafNodes = getLeafNodes;
-console.log((0, exports.getLeafNodes)(consts_1.tree3));
+console.log((0, exports.getLeafNodes)(consts_1.tree));

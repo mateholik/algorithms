@@ -16,4 +16,4 @@ function getChildrenNodesNames(tree) {
     }
     return childrenNames;
 }
-console.log(getChildrenNodesNames(consts_1.tree3));
+console.log(getChildrenNodesNames(consts_1.tree));

@@ -16,7 +16,7 @@ const getFlattenedTree = (tree) => {
     }
     return result;
 };
-console.log("getFlattenedTree3", getFlattenedTree(consts_1.tree3));
+console.log("getFlattenedTree3", getFlattenedTree(consts_1.tree));
 const revertFlattenedTree = (flatTree) => {
     const buildTree = (parentId) => {
         let result = [];
@@ -29,7 +29,7 @@ const revertFlattenedTree = (flatTree) => {
     };
     return buildTree(-1);
 };
-console.log("revertFlattenedTree3", JSON.stringify(revertFlattenedTree(getFlattenedTree(consts_1.tree3)), null, 2));
+console.log("revertFlattenedTree3", JSON.stringify(revertFlattenedTree(getFlattenedTree(consts_1.tree)), null, 2));
 // buildTree(-1) → [category_1, category_2, category_3]
 //     ├─ buildTree(1) → [category_1_1, category_1_2]
 //     │       ├─ buildTree(11) → []

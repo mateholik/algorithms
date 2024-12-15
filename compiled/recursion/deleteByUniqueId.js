@@ -27,4 +27,4 @@ const deleteByUniqueId = (tree, id) => {
     };
     return traverse(tree);
 };
-console.log("deleteByUniqueId", JSON.stringify(deleteByUniqueId(consts_1.tree3, 11), null, 2));
+console.log("deleteByUniqueId", JSON.stringify(deleteByUniqueId(consts_1.tree, 11), null, 2));

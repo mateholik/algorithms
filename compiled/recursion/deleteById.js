@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts_1 = require("./consts");
 const deepCloneTree_1 = require("./deepCloneTree");
-// const deleteById = (tree: Category3[], id: number): Category3[] => {
+// const deleteById = (tree: Category[], id: number): Category[] => {
 //   return tree
 //     .filter((node) => node.id !== id)
 //     .map((node) => ({
@@ -25,4 +25,4 @@ const deleteById = (tree, id) => {
     }
     return treeClone;
 };
-console.log(JSON.stringify(deleteById(consts_1.tree3, 31), null, 2));
+console.log(JSON.stringify(deleteById(consts_1.tree, 31), null, 2));

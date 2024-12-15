@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.tree3 = void 0;
-exports.tree3 = [
+exports.tree = void 0;
+exports.tree = [
     {
         name: "category_1",
         id: 1,

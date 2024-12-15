@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getNodesAmount = void 0;
 const consts_1 = require("./consts");
-// export const getNodesAmount = (tree: Category3[]): number => {
+// export const getNodesAmount = (tree: Category[]): number => {
 //   let nodesAmount: number = 0;
-//   const traverse = (node: Category3): void => {
+//   const traverse = (node: Category): void => {
 //     nodesAmount++;
 //     if (node.children) {
 //       for (let i = 0; i < node.children.length; i++) {
@@ -30,7 +30,7 @@ const getNodesAmount = (nodes) => {
     return total;
 };
 exports.getNodesAmount = getNodesAmount;
-console.log((0, exports.getNodesAmount)(consts_1.tree3));
+console.log((0, exports.getNodesAmount)(consts_1.tree));
 //  getNodesAmount
 //    getNodesAmount
 //      getNodesAmount

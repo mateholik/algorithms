@@ -8,4 +8,4 @@ const deepCloneTree = (tree) => {
     });
 };
 exports.deepCloneTree = deepCloneTree;
-// console.log("deepCloneTree2", JSON.stringify(deepCloneTree(tree3), null, 2));
+// console.log("deepCloneTree2", JSON.stringify(deepCloneTree(tree), null, 2));

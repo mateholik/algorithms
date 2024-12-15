@@ -16,4 +16,4 @@ function getAllNodesNames(tree) {
     }
     return names;
 }
-console.log(getAllNodesNames(consts_1.tree3));
+console.log(getAllNodesNames(consts_1.tree));
