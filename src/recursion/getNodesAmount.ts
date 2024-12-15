@@ -1,9 +1,9 @@
-import { Category3, tree3 } from "./consts";
+import { Category, tree } from "./consts";
 
-// export const getNodesAmount = (tree: Category3[]): number => {
+// export const getNodesAmount = (tree: Category[]): number => {
 //   let nodesAmount: number = 0;
 
-//   const traverse = (node: Category3): void => {
+//   const traverse = (node: Category): void => {
 //     nodesAmount++;
 //     if (node.children) {
 //       for (let i = 0; i < node.children.length; i++) {
@@ -19,7 +19,7 @@ import { Category3, tree3 } from "./consts";
 //   return nodesAmount;
 // };
 
-export const getNodesAmount = (nodes: Category3[]): number => {
+export const getNodesAmount = (nodes: Category[]): number => {
   let total: number = 0;
 
   for (let i = 0; i < nodes.length; i++) {
@@ -33,7 +33,7 @@ export const getNodesAmount = (nodes: Category3[]): number => {
   return total;
 };
 
-console.log(getNodesAmount(tree3));
+console.log(getNodesAmount(tree));
 
 //  getNodesAmount
 //    getNodesAmount

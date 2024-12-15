@@ -1,12 +1,12 @@
-export type Category3 = {
+export type Category = {
   name: string;
-  children?: Category3[];
+  children?: Category[];
   id: number;
   linkedCategory?: number;
   parentId?: number;
 };
 
-export const tree3: Category3[] = [
+export const tree: Category[] = [
   {
     name: "category_1",
     id: 1,

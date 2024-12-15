@@ -1,9 +1,9 @@
-import { tree3, type Category3 } from "./consts";
+import { tree, type Category } from "./consts";
 
-function getChildrenNodesNames(tree: Category3[]): string[] {
+function getChildrenNodesNames(tree: Category[]): string[] {
   const childrenNames: string[] = [];
 
-  function traverse(node: Category3): void {
+  function traverse(node: Category): void {
     if (!node.children) return;
 
     for (let i = 0; i < node.children.length; i++) {
@@ -19,4 +19,4 @@ function getChildrenNodesNames(tree: Category3[]): string[] {
   return childrenNames;
 }
 
-console.log(getChildrenNodesNames(tree3));
+console.log(getChildrenNodesNames(tree));

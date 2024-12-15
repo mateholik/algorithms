@@ -1,9 +1,9 @@
-import { tree3, type Category3 } from "./consts";
+import { tree, type Category } from "./consts";
 
-const getFlattenedTree = (tree: Category3[]): Category3[] => {
-  let result: Category3[] = [];
+const getFlattenedTree = (tree: Category[]): Category[] => {
+  let result: Category[] = [];
 
-  const traverse = (node: Category3, parentNodeId?: number): void => {
+  const traverse = (node: Category, parentNodeId?: number): void => {
     result.push({
       ...node,
       children: undefined,
@@ -23,10 +23,10 @@ const getFlattenedTree = (tree: Category3[]): Category3[] => {
   return result;
 };
 
-console.log("getFlattenedTree3", getFlattenedTree(tree3));
+console.log("getFlattenedTree3", getFlattenedTree(tree));
 
-const revertFlattenedTree = (flatTree: Category3[]): Category3[] => {
-  const buildTree = (parentId: number): Category3[] => {
+const revertFlattenedTree = (flatTree: Category[]): Category[] => {
+  const buildTree = (parentId: number): Category[] => {
     let result = [];
 
     for (let i = 0; i < flatTree.length; i++) {
@@ -45,7 +45,7 @@ const revertFlattenedTree = (flatTree: Category3[]): Category3[] => {
 
 console.log(
   "revertFlattenedTree3",
-  JSON.stringify(revertFlattenedTree(getFlattenedTree(tree3)), null, 2)
+  JSON.stringify(revertFlattenedTree(getFlattenedTree(tree)), null, 2)
 );
 
 // buildTree(-1) → [category_1, category_2, category_3]

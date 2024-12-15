@@ -1,23 +1,23 @@
-import { Category3, tree3 } from "./consts";
+import { Category, tree } from "./consts";
 
 // function getNodeByName(
-//   tree: Category3[],
+//   tree: Category[],
 //   name: string
-// ): Category3 | undefined {
+// ): Category | undefined {
 //   for (let i = 0; i < tree.length; i++) {
 //     if (tree[i].name === name) return tree[i];
 //     if (tree[i].children) {
-//       const result = getNodeByName(tree[i].children as Category3[], name);
+//       const result = getNodeByName(tree[i].children as Category[], name);
 //       if (result) return result;
 //     }
 //   }
 //   return undefined;
 // }
 
-function getNodeByName(tree: Category3[], name: string): Category3 | undefined {
-  let result: Category3 | undefined = undefined;
+function getNodeByName(tree: Category[], name: string): Category | undefined {
+  let result: Category | undefined = undefined;
 
-  function traverse(node: Category3): void {
+  function traverse(node: Category): void {
     if (node.name === name) {
       result = node;
       return;
@@ -37,4 +37,4 @@ function getNodeByName(tree: Category3[], name: string): Category3 | undefined {
   return result;
 }
 
-console.log(getNodeByName(tree3, "category_1_1"));
+console.log(getNodeByName(tree, "category_1_1"));

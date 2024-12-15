@@ -1,7 +1,7 @@
-import { tree3, type Category3 } from "./consts";
+import { tree, type Category } from "./consts";
 import { deepCloneTree } from "./deepCloneTree";
 
-// const deleteById = (tree: Category3[], id: number): Category3[] => {
+// const deleteById = (tree: Category[], id: number): Category[] => {
 //   return tree
 //     .filter((node) => node.id !== id)
 //     .map((node) => ({
@@ -12,7 +12,7 @@ import { deepCloneTree } from "./deepCloneTree";
 //     }));
 // };
 
-const deleteById = (tree: Category3[], id: number): Category3[] => {
+const deleteById = (tree: Category[], id: number): Category[] => {
   let treeClone = deepCloneTree(tree);
 
   for (let i = treeClone.length - 1; i >= 0; i--) {
@@ -23,11 +23,11 @@ const deleteById = (tree: Category3[], id: number): Category3[] => {
     }
     if (treeClone[i].children)
       treeClone[i].children = deleteById(
-        treeClone[i].children as Category3[],
+        treeClone[i].children as Category[],
         id
       );
   }
 
   return treeClone;
 };
-console.log(JSON.stringify(deleteById(tree3, 31), null, 2));
+console.log(JSON.stringify(deleteById(tree, 31), null, 2));

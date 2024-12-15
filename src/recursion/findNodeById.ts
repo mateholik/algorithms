@@ -1,9 +1,9 @@
-import { tree3, type Category3 } from "./consts";
+import { tree, type Category } from "./consts";
 
 export const findNodeById = (
-  tree: Category3[],
+  tree: Category[],
   id: number
-): Category3 | undefined => {
+): Category | undefined => {
   // console.log("findNodeById", { tree, id });
 
   for (let i = 0; i < tree.length; i++) {
@@ -17,4 +17,4 @@ export const findNodeById = (
   return undefined;
 };
 
-// console.log("findNodeById", JSON.stringify(findNodeById(tree3, 2), null, 2));
+// console.log("findNodeById", JSON.stringify(findNodeById(tree, 2), null, 2));

@@ -1,9 +1,9 @@
-import { Category3, tree3 } from "./consts";
+import { Category, tree } from "./consts";
 
-function getAllNodesNames(tree: Category3[]): string[] {
+function getAllNodesNames(tree: Category[]): string[] {
   const names: string[] = [];
 
-  function traverse(node: Category3): void {
+  function traverse(node: Category): void {
     names.push(node.name);
     if (!node.children) return;
 
@@ -19,4 +19,4 @@ function getAllNodesNames(tree: Category3[]): string[] {
   return names;
 }
 
-console.log(getAllNodesNames(tree3));
+console.log(getAllNodesNames(tree));

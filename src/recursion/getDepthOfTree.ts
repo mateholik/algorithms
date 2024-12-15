@@ -1,6 +1,6 @@
-import { Category3, tree3 } from "./consts";
+import { Category, tree } from "./consts";
 
-// function getDepthOfTree(tree: Category3[]): number {
+// function getDepthOfTree(tree: Category[]): number {
 //   let maxDepthAmongChildren = 0;
 
 //   for (const node of tree) {
@@ -15,10 +15,10 @@ import { Category3, tree3 } from "./consts";
 //   return maxDepthAmongChildren + 1;
 // }
 
-export const getDepthOfTree = (tree: Category3[]): number => {
+export const getDepthOfTree = (tree: Category[]): number => {
   let depthOflongestNode = 0;
 
-  const traverse = (node: Category3) => {
+  const traverse = (node: Category) => {
     let depthOfChildren = 0;
 
     if (node.children) {
@@ -43,4 +43,4 @@ export const getDepthOfTree = (tree: Category3[]): number => {
   return depthOflongestNode;
 };
 
-console.log(getDepthOfTree(tree3));
+console.log(getDepthOfTree(tree));

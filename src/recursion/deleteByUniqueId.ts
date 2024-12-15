@@ -1,11 +1,11 @@
-import { tree3, type Category3 } from "./consts";
+import { tree, type Category } from "./consts";
 import { deepCloneTree } from "./deepCloneTree";
 
 import { findNodeById } from "./findNodeById";
 
-const deleteByUniqueId = (tree: Category3[], id: number): Category3[] => {
-  const traverse = (nodes: Category3[]): Category3[] => {
-    const newTree: Category3[] = [];
+const deleteByUniqueId = (tree: Category[], id: number): Category[] => {
+  const traverse = (nodes: Category[]): Category[] => {
+    const newTree: Category[] = [];
 
     for (const node of nodes) {
       if (node.id === id) {
@@ -33,5 +33,5 @@ const deleteByUniqueId = (tree: Category3[], id: number): Category3[] => {
 
 console.log(
   "deleteByUniqueId",
-  JSON.stringify(deleteByUniqueId(tree3, 11), null, 2)
+  JSON.stringify(deleteByUniqueId(tree, 11), null, 2)
 );

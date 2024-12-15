@@ -1,9 +1,9 @@
-import { Category3, tree3 } from "./consts";
+import { Category, tree } from "./consts";
 
-export const getLeafNodes = (tree: Category3[]): Category3[] => {
-  let result: Category3[] = [];
+export const getLeafNodes = (tree: Category[]): Category[] => {
+  let result: Category[] = [];
 
-  const traverse = (node: Category3) => {
+  const traverse = (node: Category) => {
     if (!node.children) {
       result.push(node);
     } else {
@@ -20,4 +20,4 @@ export const getLeafNodes = (tree: Category3[]): Category3[] => {
   return result;
 };
 
-console.log(getLeafNodes(tree3));
+console.log(getLeafNodes(tree));

@@ -1,10 +1,10 @@
-import { Category3, tree3 } from "./consts";
+import { Category, tree } from "./consts";
 
 export const getFlattenTree = (
-  tree: Category3[],
+  tree: Category[],
   parentId?: number
-): Category3[] => {
-  let result: Category3[] = [];
+): Category[] => {
+  let result: Category[] = [];
 
   for (let i = 0; i < tree.length; i++) {
     const obj = { ...tree[i], parentId: parentId || -1 };
@@ -15,7 +15,7 @@ export const getFlattenTree = (
 
     if (tree[i].children) {
       const children = getFlattenTree(
-        tree[i].children as Category3[],
+        tree[i].children as Category[],
         tree[i].id
       );
       result = [...result, ...children];
@@ -24,12 +24,12 @@ export const getFlattenTree = (
   return result;
 };
 
-// console.log("getFlattenTree", getFlattenTree(tree3));
+// console.log("getFlattenTree", getFlattenTree(tree));
 
-export const getFlattenTree2 = (tree: Category3[]): Category3[] => {
-  let result: Category3[] = [];
+export const getFlattenTree2 = (tree: Category[]): Category[] => {
+  let result: Category[] = [];
 
-  const traverse = (node: Category3) => {
+  const traverse = (node: Category) => {
     result.push(node);
     if (node.children) {
       for (let i = 0; i < node.children.length; i++) {
@@ -41,11 +41,11 @@ export const getFlattenTree2 = (tree: Category3[]): Category3[] => {
   return result;
 };
 
-// console.log("getFlattenTree2", getFlattenTree(tree3));
+// console.log("getFlattenTree2", getFlattenTree(tree));
 
-export const revertFlattenTree = (flatTree: Category3[]): Category3[] => {
+export const revertFlattenTree = (flatTree: Category[]): Category[] => {
   const traverse = (parentId: number) => {
-    let result: Category3[] = [];
+    let result: Category[] = [];
     for (let i = 0; i < flatTree.length; i++) {
       if (flatTree[i].parentId === parentId) {
         result.push({ ...flatTree[i], children: traverse(flatTree[i].id) });
@@ -59,12 +59,12 @@ export const revertFlattenTree = (flatTree: Category3[]): Category3[] => {
 
 // console.log(
 //   "revertFlattenTree",
-//   JSON.stringify(revertFlattenTree(getFlattenTree(tree3)), null, 2)
+//   JSON.stringify(revertFlattenTree(getFlattenTree(tree)), null, 2)
 // );
 
-export const revertFlattenTree2 = (flatTree: Category3[]): Category3[] => {
+export const revertFlattenTree2 = (flatTree: Category[]): Category[] => {
   const traverse = (parentId: number) => {
-    let result: Category3[] = [];
+    let result: Category[] = [];
     for (let i = 0; i < flatTree.length; i++) {
       if (flatTree[i].parentId === parentId) {
         result.push({ ...flatTree[i], children: traverse(flatTree[i].id) });
@@ -75,10 +75,10 @@ export const revertFlattenTree2 = (flatTree: Category3[]): Category3[] => {
   return traverse(-1);
 };
 
-export const flattenTree4 = (tree: Category3[]): Category3[] => {
-  let result: Category3[] = [];
+export const flattenTree4 = (tree: Category[]): Category[] => {
+  let result: Category[] = [];
 
-  const traverse = (node: Category3, parentId?: number) => {
+  const traverse = (node: Category, parentId?: number) => {
     const obj = { ...node };
     delete obj.children;
     obj.parentId = parentId || -1;
@@ -95,13 +95,13 @@ export const flattenTree4 = (tree: Category3[]): Category3[] => {
   }
   return result;
 };
-// console.log("flattenTree4", flattenTree4(tree3));
+// console.log("flattenTree4", flattenTree4(tree));
 
 export const flattenTree6 = (
-  tree: Category3[],
+  tree: Category[],
   parentId: number = -1
-): Category3[] => {
-  let result: Category3[] = [];
+): Category[] => {
+  let result: Category[] = [];
 
   for (let i = 0; i < tree.length; i++) {
     const obj = { ...tree[i] };
@@ -109,10 +109,7 @@ export const flattenTree6 = (
     obj.parentId = parentId;
     result.push(obj);
     if (tree[i].children) {
-      const children = flattenTree6(
-        tree[i].children as Category3[],
-        tree[i].id
-      );
+      const children = flattenTree6(tree[i].children as Category[], tree[i].id);
       result = [...result, ...children];
     }
   }
@@ -120,11 +117,11 @@ export const flattenTree6 = (
   return result;
 };
 
-// console.log("flattenTree6", flattenTree6(tree3));
+// console.log("flattenTree6", flattenTree6(tree));
 
-export const revertFlatTree3 = (tree: Category3[]): Category3[] => {
+export const revertFlatTree3 = (tree: Category[]): Category[] => {
   const traverse = (parentId: number) => {
-    let result: Category3[] = [];
+    let result: Category[] = [];
     for (let i = 0; i < tree.length; i++) {
       if (tree[i].parentId === parentId) {
         const node = { ...tree[i], children: traverse(tree[i].id) };
@@ -140,17 +137,17 @@ export const revertFlatTree3 = (tree: Category3[]): Category3[] => {
 
 // console.log(
 //   "revertFlatTree3",
-//   JSON.stringify(revertFlatTree3(flattenTree6(tree3)), null, 2)
+//   JSON.stringify(revertFlatTree3(flattenTree6(tree)), null, 2)
 // );
 
-export const deepCloneTree2 = (tree: Category3[]): Category3[] => {
-  let result: Category3[] = [];
+export const deepCloneTree2 = (tree: Category[]): Category[] => {
+  let result: Category[] = [];
 
   for (let i = 0; i < tree.length; i++) {
     result.push({
       ...tree[i],
       children: tree[i].children
-        ? deepCloneTree2(tree[i].children as Category3[])
+        ? deepCloneTree2(tree[i].children as Category[])
         : undefined,
     });
   }
@@ -158,21 +155,18 @@ export const deepCloneTree2 = (tree: Category3[]): Category3[] => {
   return result;
 };
 
-// console.log("deepCloneTree2", JSON.stringify(deepCloneTree2(tree3), null, 2));
+// console.log("deepCloneTree2", JSON.stringify(deepCloneTree2(tree), null, 2));
 
 export const findNodeById3 = (
-  tree: Category3[],
+  tree: Category[],
   id: number
-): Category3 | undefined => {
+): Category | undefined => {
   for (let i = 0; i < tree.length; i++) {
     if (tree[i].id === id) {
       return tree[i];
     }
     if (tree[i].children) {
-      const matchInChildren = findNodeById3(
-        tree[i].children as Category3[],
-        id
-      );
+      const matchInChildren = findNodeById3(tree[i].children as Category[], id);
       if (matchInChildren) return matchInChildren;
     }
   }
@@ -182,11 +176,11 @@ export const findNodeById3 = (
 
 // console.log(
 //   "findNodeById3",
-//   JSON.stringify(findNodeById3(tree3, 311), null, 2)
+//   JSON.stringify(findNodeById3(tree, 311), null, 2)
 // );
 
-export const deleteNodeById3 = (tree: Category3[], id: number): Category3[] => {
-  let levelResult: Category3[] = [];
+export const deleteNodeById3 = (tree: Category[], id: number): Category[] => {
+  let levelResult: Category[] = [];
 
   for (let i = 0; i < tree.length; i++) {
     if (tree[i].id === id) {
@@ -195,7 +189,7 @@ export const deleteNodeById3 = (tree: Category3[], id: number): Category3[] => {
       levelResult.push({
         ...tree[i],
         children: tree[i].children
-          ? deleteNodeById3(tree[i].children as Category3[], id)
+          ? deleteNodeById3(tree[i].children as Category[], id)
           : undefined,
       });
     }
@@ -206,19 +200,19 @@ export const deleteNodeById3 = (tree: Category3[], id: number): Category3[] => {
 
 // console.log(
 //   "deleteNodeById3",
-//   JSON.stringify(deleteNodeById3(tree3, 3), null, 2)
+//   JSON.stringify(deleteNodeById3(tree, 3), null, 2)
 // );
 
 export const deleteNodeByUniqueId3 = (
-  tree: Category3[],
+  tree: Category[],
   id: number
-): Category3[] => {
-  let result: Category3[] = [];
+): Category[] => {
+  let result: Category[] = [];
 
   for (let i = 0; i < tree.length; i++) {
     if (tree[i].id === id) {
       const isUnique = tree[i].linkedCategory
-        ? findNodeById3(tree3, tree[i].linkedCategory as number) === undefined
+        ? findNodeById3(tree, tree[i].linkedCategory as number) === undefined
         : true;
 
       if (!isUnique) {
@@ -228,7 +222,7 @@ export const deleteNodeByUniqueId3 = (
       result.push({
         ...tree[i],
         children: tree[i].children
-          ? deleteNodeByUniqueId3(tree[i].children as Category3[], id)
+          ? deleteNodeByUniqueId3(tree[i].children as Category[], id)
           : undefined,
       });
     }
@@ -239,29 +233,29 @@ export const deleteNodeByUniqueId3 = (
 
 // console.log(
 //   "deleteNodeByUniqueId3",
-//   JSON.stringify(deleteNodeByUniqueId3(tree3, 11), null, 2)
+//   JSON.stringify(deleteNodeByUniqueId3(tree, 11), null, 2)
 // );
 
-export const getAllNodeNames = (tree: Category3[]): string[] => {
+export const getAllNodeNames = (tree: Category[]): string[] => {
   let result: string[] = [];
 
   for (let i = 0; i < tree.length; i++) {
     result.push(tree[i].name);
     if (tree[i].children) {
-      result = [...result, ...getAllNodeNames(tree[i].children as Category3[])];
+      result = [...result, ...getAllNodeNames(tree[i].children as Category[])];
     }
   }
   return result;
 };
 
-// console.log("getAllNodeNames", getAllNodeNames(tree3));
+// console.log("getAllNodeNames", getAllNodeNames(tree));
 
-export const getChildrenNodeNames = (tree: Category3[]): string[] => {
+export const getChildrenNodeNames = (tree: Category[]): string[] => {
   let result: string[] = [];
 
   for (let i = 0; i < tree.length; i++) {
     if (tree[i].children) {
-      const childrenNames = getAllNodeNames(tree[i].children as Category3[]);
+      const childrenNames = getAllNodeNames(tree[i].children as Category[]);
       result = [...result, ...childrenNames];
     }
   }
@@ -269,14 +263,14 @@ export const getChildrenNodeNames = (tree: Category3[]): string[] => {
   return result;
 };
 
-// console.log("getChildrenNodeNames", getChildrenNodeNames(tree3));
+// console.log("getChildrenNodeNames", getChildrenNodeNames(tree));
 
-export const getDepthOfTree = (tree: Category3[]): number => {
+export const getDepthOfTree = (tree: Category[]): number => {
   let maxDepth: number = 0;
 
   for (let i = 0; i < tree.length; i++) {
     if (tree[i].children) {
-      const branchDepth = getDepthOfTree(tree[i].children as Category3[]);
+      const branchDepth = getDepthOfTree(tree[i].children as Category[]);
       if (branchDepth > maxDepth) maxDepth = branchDepth;
     }
   }
@@ -284,4 +278,4 @@ export const getDepthOfTree = (tree: Category3[]): number => {
   return maxDepth + 1;
 };
 
-console.log("getDepthOfTree", getDepthOfTree(tree3));
+console.log("getDepthOfTree", getDepthOfTree(tree));
