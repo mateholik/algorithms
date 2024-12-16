@@ -28,3 +28,33 @@ const deleteByUniqueId = (tree, id) => {
     return traverse(tree);
 };
 console.log("deleteByUniqueId", JSON.stringify(deleteByUniqueId(consts_1.tree, 11), null, 2));
+// deleteByUniqueId(tree, 12)
+// ├─ traverse([id: 1, id: 2, id: 3])
+// │   ├─ traverse([id: 11, id: 12])
+// │   │   ├─ traverse([]) → []
+// │   │   │   └─ return []
+// │   │   ├─ traverse([id: 121])
+// │   │   │   ├─ traverse([]) → []
+// │   │   │   │   └─ return []
+// │   │   │   └─ return [id: 121]
+// │   │   └─ return [id: 11]
+// │   └─ return [id: 1, children: [id: 11]]
+// │   ├─ traverse([id: 21, id: 22])
+// │   │   ├─ traverse([]) → []
+// │   │   │   └─ return []
+// │   │   ├─ traverse([]) → []
+// │   │   │   └─ return []
+// │   │   └─ return [id: 21, id: 22]
+// │   └─ return [id: 2, children: [id: 21, id: 22]]
+// │   ├─ traverse([id: 31])
+// │   │   ├─ traverse([id: 311])
+// │   │   │   ├─ traverse([]) → []
+// │   │   │   │   └─ return []
+// │   │   │   └─ return [id: 311]
+// │   │   └─ return [id: 31, children: [id: 311]]
+// │   └─ return [id: 3, children: [id: 31, children: [id: 311]]]
+// └─ return [
+//       { id: 1, children: [id: 11] },
+//       { id: 2, children: [id: 21, id: 22] },
+//       { id: 3, children: [id: 31, children: [id: 311]] }
+//    ]
