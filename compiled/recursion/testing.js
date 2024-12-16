@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDepthOfTree = exports.getChildrenNodeNames = exports.getAllNodeNames = exports.deleteNodeByUniqueId3 = exports.deleteNodeById3 = exports.findNodeById3 = exports.deepCloneTree2 = exports.revertFlatTree3 = exports.flattenTree6 = exports.flattenTree4 = exports.revertFlattenTree2 = exports.revertFlattenTree = exports.getFlattenTree2 = exports.getFlattenTree = void 0;
+exports.flattenTree = exports.deleteNodeByUniqueId = exports.deleteNodeById = exports.getNodeById = exports.getNodesAmount = exports.getDepthOfTree = exports.getChildrenNodeNames = exports.getAllNodeNames = exports.deleteNodeByUniqueId3 = exports.deleteNodeById3 = exports.findNodeById3 = exports.deepCloneTree2 = exports.revertFlatTree3 = exports.flattenTree6 = exports.flattenTree4 = exports.revertFlattenTree2 = exports.revertFlattenTree = exports.getFlattenTree2 = exports.getFlattenTree = void 0;
 const consts_1 = require("./consts");
 const getFlattenTree = (tree, parentId) => {
     let result = [];
@@ -224,4 +224,147 @@ const getDepthOfTree = (tree) => {
     return maxDepth + 1;
 };
 exports.getDepthOfTree = getDepthOfTree;
-console.log("getDepthOfTree", (0, exports.getDepthOfTree)(consts_1.tree));
+// console.log("getDepthOfTree", getDepthOfTree(tree));
+const getNodesAmount = (tree) => {
+    let amount = 0;
+    for (let i = 0; i < tree.length; i++) {
+        amount++;
+        if (tree[i].children) {
+            const amountInBranch = (0, exports.getNodesAmount)(tree[i].children);
+            amount += amountInBranch;
+        }
+    }
+    return amount;
+};
+exports.getNodesAmount = getNodesAmount;
+// console.log("getNodesAmount", getNodesAmount(tree));
+const getNodeById = (tree, id) => {
+    for (let i = 0; i < tree.length; i++) {
+        if (tree[i].id === id) {
+            return tree[i];
+        }
+        if (tree[i].children) {
+            const matchInChildren = (0, exports.getNodeById)(tree[i].children, id);
+            if (matchInChildren)
+                return matchInChildren;
+        }
+    }
+    return undefined;
+};
+exports.getNodeById = getNodeById;
+// console.log("getNodeById", getNodeById(tree, 31));
+const deleteNodeById = (tree, id) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        if (tree[i].id === id) {
+            continue;
+        }
+        else {
+            result.push(Object.assign(Object.assign({}, tree[i]), { children: tree[i].children
+                    ? (0, exports.deleteNodeById)(tree[i].children, id)
+                    : undefined }));
+        }
+    }
+    return result;
+};
+exports.deleteNodeById = deleteNodeById;
+// console.log(
+//   "deleteNodeById",
+//   JSON.stringify(deleteNodeById(tree, 11), null, 2)
+// );
+const originalTree = consts_1.tree;
+const deleteNodeByUniqueId = (tree, id) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        if (tree[i].id === id) {
+            const isUnique = tree[i].linkedCategory
+                ? (0, exports.getNodeById)(originalTree, tree[i].linkedCategory) ===
+                    undefined
+                : true;
+            if (!isUnique) {
+                result.push(Object.assign({}, tree[i]));
+            }
+        }
+        else {
+            result.push(Object.assign(Object.assign({}, tree[i]), { children: tree[i].children
+                    ? (0, exports.deleteNodeByUniqueId)(tree[i].children, id)
+                    : undefined }));
+        }
+    }
+    return result;
+};
+exports.deleteNodeByUniqueId = deleteNodeByUniqueId;
+// console.log(
+//   "deleteNodeByUniqueId",
+//   JSON.stringify(deleteNodeByUniqueId(tree, 11), null, 2)
+// );
+const flattenTree = (tree, parentId) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        const node = Object.assign({}, tree[i]);
+        delete node.children;
+        node.parentId = parentId || -1;
+        result.push(node);
+        if (tree[i].children) {
+            const children = (0, exports.flattenTree)(tree[i].children, tree[i].id);
+            result = [...result, ...children];
+        }
+    }
+    return result;
+};
+exports.flattenTree = flattenTree;
+// console.log("flattenTree", flattenTree(tree));
+const revertFlattenedTree = (flatTree) => {
+    const traverse = (parentId) => {
+        let result = [];
+        for (let i = 0; i < flatTree.length; i++) {
+            if (flatTree[i].parentId === parentId) {
+                result.push(Object.assign(Object.assign({}, flatTree[i]), { children: traverse(flatTree[i].id) }));
+            }
+        }
+        return result;
+    };
+    return traverse(-1);
+};
+// console.log(
+//   "revertFlattenedTree",
+//   JSON.stringify(revertFlattenedTree(flattenTree(tree)), null, 2)
+// );
+const revertFlattenedTree2 = (flatTree) => {
+    const traverse = (parentId) => {
+        let result = [];
+        for (let i = 0; i < flatTree.length; i++) {
+            if (flatTree[i].parentId === parentId) {
+                result.push(Object.assign(Object.assign({}, flatTree[i]), { children: traverse(flatTree[i].id) }));
+            }
+        }
+        return result;
+    };
+    return traverse(-1);
+};
+const getLeafNodes = (tree) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        if (!tree[i].children) {
+            result.push(Object.assign({}, tree[i]));
+        }
+        else {
+            const children = getLeafNodes(tree[i].children);
+            result = [...result, ...children];
+        }
+    }
+    return result;
+};
+// console.log("revertFlattenedTree", JSON.stringify(getLeafNodes(tree), null, 2));
+const getDepthOfTree3 = (tree) => {
+    let maxDepth = 0;
+    for (let i = 0; i < tree.length; i++) {
+        if (tree[i].children) {
+            const branchDepth = getDepthOfTree3(tree[i].children);
+            if (branchDepth > maxDepth)
+                maxDepth = branchDepth;
+        }
+    }
+    return maxDepth + 1;
+};
+console.log("getDepthOfTree3", getDepthOfTree3(consts_1.tree));

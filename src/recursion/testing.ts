@@ -278,4 +278,182 @@ export const getDepthOfTree = (tree: Category[]): number => {
   return maxDepth + 1;
 };
 
-console.log("getDepthOfTree", getDepthOfTree(tree));
+// console.log("getDepthOfTree", getDepthOfTree(tree));
+
+export const getNodesAmount = (tree: Category[]): number => {
+  let amount: number = 0;
+
+  for (let i = 0; i < tree.length; i++) {
+    amount++;
+    if (tree[i].children) {
+      const amountInBranch = getNodesAmount(tree[i].children as Category[]);
+      amount += amountInBranch;
+    }
+  }
+
+  return amount;
+};
+
+// console.log("getNodesAmount", getNodesAmount(tree));
+
+export const getNodeById = (
+  tree: Category[],
+  id: number
+): Category | undefined => {
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].id === id) {
+      return tree[i];
+    }
+    if (tree[i].children) {
+      const matchInChildren = getNodeById(tree[i].children as Category[], id);
+      if (matchInChildren) return matchInChildren;
+    }
+  }
+  return undefined;
+};
+
+// console.log("getNodeById", getNodeById(tree, 31));
+
+export const deleteNodeById = (tree: Category[], id: number): Category[] => {
+  let result: Category[] = [];
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].id === id) {
+      continue;
+    } else {
+      result.push({
+        ...tree[i],
+        children: tree[i].children
+          ? deleteNodeById(tree[i].children as Category[], id)
+          : undefined,
+      });
+    }
+  }
+
+  return result;
+};
+// console.log(
+//   "deleteNodeById",
+//   JSON.stringify(deleteNodeById(tree, 11), null, 2)
+// );
+
+const originalTree = tree;
+export const deleteNodeByUniqueId = (
+  tree: Category[],
+  id: number
+): Category[] => {
+  let result: Category[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].id === id) {
+      const isUnique = tree[i].linkedCategory
+        ? getNodeById(originalTree, tree[i].linkedCategory as number) ===
+          undefined
+        : true;
+
+      if (!isUnique) {
+        result.push({ ...tree[i] });
+      }
+    } else {
+      result.push({
+        ...tree[i],
+        children: tree[i].children
+          ? deleteNodeByUniqueId(tree[i].children as Category[], id)
+          : undefined,
+      });
+    }
+  }
+
+  return result;
+};
+
+// console.log(
+//   "deleteNodeByUniqueId",
+//   JSON.stringify(deleteNodeByUniqueId(tree, 11), null, 2)
+// );
+
+export const flattenTree = (
+  tree: Category[],
+  parentId?: number
+): Category[] => {
+  let result: Category[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    const node = { ...tree[i] };
+    delete node.children;
+    node.parentId = parentId || -1;
+    result.push(node);
+
+    if (tree[i].children) {
+      const children = flattenTree(tree[i].children as Category[], tree[i].id);
+
+      result = [...result, ...children];
+    }
+  }
+
+  return result;
+};
+
+// console.log("flattenTree", flattenTree(tree));
+
+const revertFlattenedTree = (flatTree: Category[]): Category[] => {
+  const traverse = (parentId: number) => {
+    let result: Category[] = [];
+    for (let i = 0; i < flatTree.length; i++) {
+      if (flatTree[i].parentId === parentId) {
+        result.push({ ...flatTree[i], children: traverse(flatTree[i].id) });
+      }
+    }
+    return result;
+  };
+
+  return traverse(-1);
+};
+
+// console.log(
+//   "revertFlattenedTree",
+//   JSON.stringify(revertFlattenedTree(flattenTree(tree)), null, 2)
+// );
+
+const revertFlattenedTree2 = (flatTree: Category[]): Category[] => {
+  const traverse = (parentId: number) => {
+    let result: Category[] = [];
+    for (let i = 0; i < flatTree.length; i++) {
+      if (flatTree[i].parentId === parentId) {
+        result.push({ ...flatTree[i], children: traverse(flatTree[i].id) });
+      }
+    }
+    return result;
+  };
+  return traverse(-1);
+};
+
+const getLeafNodes = (tree: Category[]): Category[] => {
+  let result: Category[] = [];
+  for (let i = 0; i < tree.length; i++) {
+    if (!tree[i].children) {
+      result.push({ ...tree[i] });
+    } else {
+      const children = getLeafNodes(tree[i].children as Category[]);
+      result = [...result, ...children];
+    }
+  }
+
+  return result;
+};
+
+// console.log("revertFlattenedTree", JSON.stringify(getLeafNodes(tree), null, 2));
+
+const getDepthOfTree3 = (tree: Category[]): number => {
+  let maxDepth = 0;
+
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].children) {
+      const branchDepth = getDepthOfTree3(tree[i].children as Category[]);
+      if (branchDepth > maxDepth) maxDepth = branchDepth;
+    }
+  }
+
+  return maxDepth + 1;
+};
+
+console.log("getDepthOfTree3", getDepthOfTree3(tree));
