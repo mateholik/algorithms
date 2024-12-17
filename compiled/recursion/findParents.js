@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findParents = void 0;
+exports.findParents2 = exports.findParents = void 0;
 const consts_1 = require("./consts");
 const findParents = (tree, id) => {
     const traverse = (tree, path) => {
@@ -21,7 +21,7 @@ const findParents = (tree, id) => {
     return traverse(tree, []) || [];
 };
 exports.findParents = findParents;
-console.log("findParents", (0, exports.findParents)(consts_1.tree, 121));
+// console.log("findParents", findParents(tree, 121));
 // findParents(tree, 121)
 // ├─ traverse([category_1, category_2, category_3], [])
 // │   ├─ traverse([category_1_1, category_1_2], [category_1])
@@ -70,3 +70,38 @@ console.log("findParents", (0, exports.findParents)(consts_1.tree, 121));
 //     if (match) return match;
 //   }
 // };
+const walk = (tree) => {
+    var _a;
+    for (let i = 0; i < tree.length; i++) {
+        console.log(tree[i].id);
+        if ((_a = tree[i].children) === null || _a === void 0 ? void 0 : _a.length) {
+            walk(tree[i].children);
+        }
+    }
+};
+// console.log("walk", walk(tree));
+const findParents2 = (tree, id) => {
+    const traverse = (node, path) => {
+        path.push(node.name);
+        if (node.id === id) {
+            return path.slice(0, -1);
+        }
+        if (node.children) {
+            for (let i = 0; i < node.children.length; i++) {
+                const match = traverse(node.children[i], path);
+                if (match)
+                    return match;
+            }
+        }
+        path.pop();
+        return undefined;
+    };
+    for (let i = 0; i < tree.length; i++) {
+        const path = traverse(tree[i], []);
+        if (path)
+            return path;
+    }
+    return [];
+};
+exports.findParents2 = findParents2;
+console.log("findParents2", (0, exports.findParents2)(consts_1.tree, 31));

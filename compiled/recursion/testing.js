@@ -367,4 +367,82 @@ const getDepthOfTree3 = (tree) => {
     }
     return maxDepth + 1;
 };
-console.log("getDepthOfTree3", getDepthOfTree3(consts_1.tree));
+// console.log("getDepthOfTree3", getDepthOfTree3(tree));
+const findCategoryByID = (tree, id) => {
+    for (const node of tree) {
+        if (node.id === id) {
+            return node;
+        }
+        if (node.children) {
+            const match = findCategoryByID(node.children, id);
+            if (match)
+                return match;
+        }
+    }
+    return undefined;
+};
+// console.log("findCategoryByID", findCategoryByID(tree, 1));
+const deleteCategoryByID = (tree, id) => {
+    let updatedTree = [];
+    for (const node of tree) {
+        if (node.id === id) {
+            continue;
+        }
+        else {
+            updatedTree.push(Object.assign(Object.assign({}, node), { children: node.children
+                    ? deleteCategoryByID(node.children, id)
+                    : undefined }));
+        }
+    }
+    return updatedTree;
+};
+// console.log(
+//   "deleteCategoryByID",
+//   JSON.stringify(deleteCategoryByID(tree, 121), null, 2)
+// );
+const deleteCategoryByUniqueID = (tree, id, originalTree) => {
+    let updatedTree = [];
+    for (const node of tree) {
+        if (node.id === id) {
+            const isUnique = node.linkedCategory
+                ? findCategoryByID(originalTree, node.linkedCategory) === undefined
+                : true;
+            if (!isUnique) {
+                updatedTree.push(Object.assign({}, node));
+            }
+        }
+        else {
+            updatedTree.push(Object.assign(Object.assign({}, node), { children: node.children
+                    ? deleteCategoryByUniqueID(node.children, id, originalTree)
+                    : undefined }));
+        }
+    }
+    return updatedTree;
+};
+console.log("deleteCategoryByUniqueID", JSON.stringify(deleteCategoryByUniqueID(consts_1.tree, 3, consts_1.tree), null, 2));
+// const originalTree = tree;
+// export const deleteNodeByUniqueId = (
+//   tree: Category[],
+//   id: number
+// ): Category[] => {
+//   let result: Category[] = [];
+//   for (let i = 0; i < tree.length; i++) {
+//     if (tree[i].id === id) {
+//       const isUnique = tree[i].linkedCategory
+//         ? getNodeById(originalTree, tree[i].linkedCategory as number) ===
+//           undefined
+//         : true;
+//       if (!isUnique) {
+//         result.push({ ...tree[i] });
+//       }
+//     } else {
+//       result.push({
+//         ...tree[i],
+//         children: tree[i].children
+//           ? deleteNodeByUniqueId(tree[i].children as Category[], id)
+//           : undefined,
+//       });
+//     }
+//   }
+//   return result;
+// };
