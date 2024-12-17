@@ -45,57 +45,22 @@ export const findParents = (tree: Category[], id: number): string[] => {
 // │   └─ return null
 // └─ return [category_1, category_1_2]
 
-// export const findParents = (
-//   tree: Category[],
-//   id: number
-// ): string[] | undefined => {
-//   const traverse = (node: Category, path: string[]): string[] | undefined => {
-//     console.log("Visiting:", node.id, "Path so far:", path);
-
-//     path.push(node.name);
-
-//     if (node.id === id) {
-//       return path.slice(0, -1);
-//     }
-
-//     if (node.children) {
-//       for (let i = 0; i < node.children.length; i++) {
-//         const match = traverse(node.children[i] as Category, path);
-//         if (match) return match;
-//       }
-//     }
-//     path.pop();
-//     return undefined;
-//   };
-
-//   for (let i = 0; i < tree.length; i++) {
-//     const match = traverse(tree[i] as Category, []);
-//     if (match) return match;
-//   }
-// };
-
-const walk = (tree: Category[]) => {
-  for (let i = 0; i < tree.length; i++) {
-    console.log(tree[i].id);
-
-    if (tree[i].children?.length) {
-      walk(tree[i].children as Category[]);
-    }
-  }
-};
-
-// console.log("walk", walk(tree));
-
-export const findParents2 = (tree: Category[], id: number): string[] => {
+export const findParents2 = (
+  tree: Category[],
+  id: number
+): string[] | undefined => {
   const traverse = (node: Category, path: string[]): string[] | undefined => {
+    console.log("Visiting:", node.id, "Path so far:", path);
+
     path.push(node.name);
 
     if (node.id === id) {
       return path.slice(0, -1);
     }
+
     if (node.children) {
       for (let i = 0; i < node.children.length; i++) {
-        const match = traverse(node.children[i], path);
+        const match = traverse(node.children[i] as Category, path);
         if (match) return match;
       }
     }
@@ -104,10 +69,7 @@ export const findParents2 = (tree: Category[], id: number): string[] => {
   };
 
   for (let i = 0; i < tree.length; i++) {
-    const path = traverse(tree[i], []);
-    if (path) return path;
+    const match = traverse(tree[i] as Category, []);
+    if (match) return match;
   }
-  return [];
 };
-
-console.log("findParents2", findParents2(tree, 31));

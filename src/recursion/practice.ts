@@ -562,3 +562,41 @@ console.log(
 
 //   return result;
 // };
+
+const walk = (tree: Category[]) => {
+  for (let i = 0; i < tree.length; i++) {
+    console.log(tree[i].id);
+
+    if (tree[i].children?.length) {
+      walk(tree[i].children as Category[]);
+    }
+  }
+};
+
+// console.log("walk", walk(tree));
+
+export const findParents2 = (tree: Category[], id: number): string[] => {
+  const traverse = (node: Category, path: string[]): string[] | undefined => {
+    path.push(node.name);
+
+    if (node.id === id) {
+      return path.slice(0, -1);
+    }
+    if (node.children) {
+      for (let i = 0; i < node.children.length; i++) {
+        const match = traverse(node.children[i], path);
+        if (match) return match;
+      }
+    }
+    path.pop();
+    return undefined;
+  };
+
+  for (let i = 0; i < tree.length; i++) {
+    const path = traverse(tree[i], []);
+    if (path) return path;
+  }
+  return [];
+};
+
+console.log("findParents2", findParents2(tree, 31));

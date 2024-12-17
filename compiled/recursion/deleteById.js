@@ -26,3 +26,17 @@ const deleteById = (tree, id) => {
     return treeClone;
 };
 console.log(JSON.stringify(deleteById(consts_1.tree, 31), null, 2));
+const deleteCategoryByID = (tree, id) => {
+    let updatedTree = [];
+    for (const node of tree) {
+        if (node.id === id) {
+            continue;
+        }
+        else {
+            updatedTree.push(Object.assign(Object.assign({}, node), { children: node.children
+                    ? deleteCategoryByID(node.children, id)
+                    : undefined }));
+        }
+    }
+    return updatedTree;
+};

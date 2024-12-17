@@ -17,19 +17,19 @@ const consts_1 = require("./consts");
 //   }
 //   return nodesAmount;
 // };
-const getNodesAmount = (nodes) => {
-    let total = 0;
-    for (let i = 0; i < nodes.length; i++) {
-        total++;
-        // total += getNodesAmount(nodes[i].children ?? []);
-        if (nodes[i].children) {
-            // @ts-ignore
-            total += (0, exports.getNodesAmount)(nodes[i].children);
+const getNodesAmount = (tree) => {
+    let amount = 0;
+    for (let i = 0; i < tree.length; i++) {
+        amount++;
+        if (tree[i].children) {
+            const amountInBranch = (0, exports.getNodesAmount)(tree[i].children);
+            amount += amountInBranch;
         }
     }
-    return total;
+    return amount;
 };
 exports.getNodesAmount = getNodesAmount;
+// console.log("getNodesAmount", getNodesAmount(tree));
 console.log((0, exports.getNodesAmount)(consts_1.tree));
 //  getNodesAmount
 //    getNodesAmount

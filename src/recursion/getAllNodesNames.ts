@@ -19,4 +19,18 @@ function getAllNodesNames(tree: Category[]): string[] {
   return names;
 }
 
-console.log(getAllNodesNames(tree));
+// console.log(getAllNodesNames(tree));
+
+export const getAllNodeNames2 = (tree: Category[]): string[] => {
+  let result: string[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    result.push(tree[i].name);
+    if (tree[i].children) {
+      result = [...result, ...getAllNodeNames2(tree[i].children as Category[])];
+    }
+  }
+  return result;
+};
+
+// console.log("getAllNodeNames", getAllNodeNames(tree));

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const consts_1 = require("./consts");
+exports.getAllNodeNames2 = void 0;
 function getAllNodesNames(tree) {
     const names = [];
     function traverse(node) {
@@ -16,4 +16,16 @@ function getAllNodesNames(tree) {
     }
     return names;
 }
-console.log(getAllNodesNames(consts_1.tree));
+// console.log(getAllNodesNames(tree));
+const getAllNodeNames2 = (tree) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        result.push(tree[i].name);
+        if (tree[i].children) {
+            result = [...result, ...(0, exports.getAllNodeNames2)(tree[i].children)];
+        }
+    }
+    return result;
+};
+exports.getAllNodeNames2 = getAllNodeNames2;
+// console.log("getAllNodeNames", getAllNodeNames(tree));

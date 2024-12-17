@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getFlattenTree = void 0;
 const consts_1 = require("./consts");
 const getFlattenedTree = (tree) => {
     let result = [];
@@ -16,7 +17,22 @@ const getFlattenedTree = (tree) => {
     }
     return result;
 };
-console.log("getFlattenedTree3", getFlattenedTree(consts_1.tree));
+// console.log("getFlattenedTree3", getFlattenedTree(tree));
+const getFlattenTree = (tree, parentId) => {
+    let result = [];
+    for (let i = 0; i < tree.length; i++) {
+        const obj = Object.assign(Object.assign({}, tree[i]), { parentId: parentId || -1 });
+        delete obj.children;
+        result.push(obj);
+        if (tree[i].children) {
+            const children = (0, exports.getFlattenTree)(tree[i].children, tree[i].id);
+            result = [...result, ...children];
+        }
+    }
+    return result;
+};
+exports.getFlattenTree = getFlattenTree;
+// console.log("getFlattenTree", getFlattenTree(tree));
 const revertFlattenedTree = (flatTree) => {
     const buildTree = (parentId) => {
         let result = [];

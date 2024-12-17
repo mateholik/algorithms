@@ -23,7 +23,33 @@ const getFlattenedTree = (tree: Category[]): Category[] => {
   return result;
 };
 
-console.log("getFlattenedTree3", getFlattenedTree(tree));
+// console.log("getFlattenedTree3", getFlattenedTree(tree));
+
+export const getFlattenTree = (
+  tree: Category[],
+  parentId?: number
+): Category[] => {
+  let result: Category[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    const obj = { ...tree[i], parentId: parentId || -1 };
+
+    delete obj.children;
+
+    result.push(obj);
+
+    if (tree[i].children) {
+      const children = getFlattenTree(
+        tree[i].children as Category[],
+        tree[i].id
+      );
+      result = [...result, ...children];
+    }
+  }
+  return result;
+};
+
+// console.log("getFlattenTree", getFlattenTree(tree));
 
 const revertFlattenedTree = (flatTree: Category[]): Category[] => {
   const buildTree = (parentId: number): Category[] => {

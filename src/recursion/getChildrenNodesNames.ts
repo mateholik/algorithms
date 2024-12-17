@@ -1,4 +1,5 @@
 import { tree, type Category } from "./consts";
+import { getAllNodeNames2 } from "./getAllNodesNames";
 
 function getChildrenNodesNames(tree: Category[]): string[] {
   const childrenNames: string[] = [];
@@ -19,4 +20,19 @@ function getChildrenNodesNames(tree: Category[]): string[] {
   return childrenNames;
 }
 
-console.log(getChildrenNodesNames(tree));
+// console.log(getChildrenNodesNames(tree));
+
+export const getChildrenNodeNames = (tree: Category[]): string[] => {
+  let result: string[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    if (tree[i].children) {
+      const childrenNames = getAllNodeNames2(tree[i].children as Category[]);
+      result = [...result, ...childrenNames];
+    }
+  }
+
+  return result;
+};
+
+// console.log("getChildrenNodeNames", getChildrenNodeNames(tree));

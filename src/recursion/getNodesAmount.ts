@@ -19,19 +19,21 @@ import { Category, tree } from "./consts";
 //   return nodesAmount;
 // };
 
-export const getNodesAmount = (nodes: Category[]): number => {
-  let total: number = 0;
+export const getNodesAmount = (tree: Category[]): number => {
+  let amount: number = 0;
 
-  for (let i = 0; i < nodes.length; i++) {
-    total++;
-    // total += getNodesAmount(nodes[i].children ?? []);
-    if (nodes[i].children) {
-      // @ts-ignore
-      total += getNodesAmount(nodes[i].children);
+  for (let i = 0; i < tree.length; i++) {
+    amount++;
+    if (tree[i].children) {
+      const amountInBranch = getNodesAmount(tree[i].children as Category[]);
+      amount += amountInBranch;
     }
   }
-  return total;
+
+  return amount;
 };
+
+// console.log("getNodesAmount", getNodesAmount(tree));
 
 console.log(getNodesAmount(tree));
 

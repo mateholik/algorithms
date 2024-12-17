@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findParents2 = exports.findParents = void 0;
-const consts_1 = require("./consts");
 const findParents = (tree, id) => {
     const traverse = (tree, path) => {
         for (let i = 0; i < tree.length; i++) {
@@ -46,42 +45,9 @@ exports.findParents = findParents;
 // │   │   └─ return null
 // │   └─ return null
 // └─ return [category_1, category_1_2]
-// export const findParents = (
-//   tree: Category[],
-//   id: number
-// ): string[] | undefined => {
-//   const traverse = (node: Category, path: string[]): string[] | undefined => {
-//     console.log("Visiting:", node.id, "Path so far:", path);
-//     path.push(node.name);
-//     if (node.id === id) {
-//       return path.slice(0, -1);
-//     }
-//     if (node.children) {
-//       for (let i = 0; i < node.children.length; i++) {
-//         const match = traverse(node.children[i] as Category, path);
-//         if (match) return match;
-//       }
-//     }
-//     path.pop();
-//     return undefined;
-//   };
-//   for (let i = 0; i < tree.length; i++) {
-//     const match = traverse(tree[i] as Category, []);
-//     if (match) return match;
-//   }
-// };
-const walk = (tree) => {
-    var _a;
-    for (let i = 0; i < tree.length; i++) {
-        console.log(tree[i].id);
-        if ((_a = tree[i].children) === null || _a === void 0 ? void 0 : _a.length) {
-            walk(tree[i].children);
-        }
-    }
-};
-// console.log("walk", walk(tree));
 const findParents2 = (tree, id) => {
     const traverse = (node, path) => {
+        console.log("Visiting:", node.id, "Path so far:", path);
         path.push(node.name);
         if (node.id === id) {
             return path.slice(0, -1);
@@ -97,11 +63,9 @@ const findParents2 = (tree, id) => {
         return undefined;
     };
     for (let i = 0; i < tree.length; i++) {
-        const path = traverse(tree[i], []);
-        if (path)
-            return path;
+        const match = traverse(tree[i], []);
+        if (match)
+            return match;
     }
-    return [];
 };
 exports.findParents2 = findParents2;
-console.log("findParents2", (0, exports.findParents2)(consts_1.tree, 31));

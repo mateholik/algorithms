@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.flattenTree = exports.deleteNodeByUniqueId = exports.deleteNodeById = exports.getNodeById = exports.getNodesAmount = exports.getDepthOfTree = exports.getChildrenNodeNames = exports.getAllNodeNames = exports.deleteNodeByUniqueId3 = exports.deleteNodeById3 = exports.findNodeById3 = exports.deepCloneTree2 = exports.revertFlatTree3 = exports.flattenTree6 = exports.flattenTree4 = exports.revertFlattenTree2 = exports.revertFlattenTree = exports.getFlattenTree2 = exports.getFlattenTree = void 0;
+exports.findParents2 = exports.flattenTree = exports.deleteNodeByUniqueId = exports.deleteNodeById = exports.getNodeById = exports.getNodesAmount = exports.getDepthOfTree = exports.getChildrenNodeNames = exports.getAllNodeNames = exports.deleteNodeByUniqueId3 = exports.deleteNodeById3 = exports.findNodeById3 = exports.deepCloneTree2 = exports.revertFlatTree3 = exports.flattenTree6 = exports.flattenTree4 = exports.revertFlattenTree2 = exports.revertFlattenTree = exports.getFlattenTree2 = exports.getFlattenTree = void 0;
 const consts_1 = require("./consts");
 const getFlattenTree = (tree, parentId) => {
     let result = [];
@@ -446,3 +446,38 @@ console.log("deleteCategoryByUniqueID", JSON.stringify(deleteCategoryByUniqueID(
 //   }
 //   return result;
 // };
+const walk = (tree) => {
+    var _a;
+    for (let i = 0; i < tree.length; i++) {
+        console.log(tree[i].id);
+        if ((_a = tree[i].children) === null || _a === void 0 ? void 0 : _a.length) {
+            walk(tree[i].children);
+        }
+    }
+};
+// console.log("walk", walk(tree));
+const findParents2 = (tree, id) => {
+    const traverse = (node, path) => {
+        path.push(node.name);
+        if (node.id === id) {
+            return path.slice(0, -1);
+        }
+        if (node.children) {
+            for (let i = 0; i < node.children.length; i++) {
+                const match = traverse(node.children[i], path);
+                if (match)
+                    return match;
+            }
+        }
+        path.pop();
+        return undefined;
+    };
+    for (let i = 0; i < tree.length; i++) {
+        const path = traverse(tree[i], []);
+        if (path)
+            return path;
+    }
+    return [];
+};
+exports.findParents2 = findParents2;
+console.log("findParents2", (0, exports.findParents2)(consts_1.tree, 31));

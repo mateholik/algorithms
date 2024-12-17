@@ -66,3 +66,36 @@ console.log(
 //       { id: 2, children: [id: 21, id: 22] },
 //       { id: 3, children: [id: 31, children: [id: 311]] }
 //    ]
+
+const deleteCategoryByUniqueID = (
+  tree: Category[],
+  id: number,
+  originalTree: Category[]
+): Category[] => {
+  let updatedTree: Category[] = [];
+
+  for (const node of tree) {
+    if (node.id === id) {
+      const isUnique = node.linkedCategory
+        ? findNodeById(originalTree, node.linkedCategory) === undefined
+        : true;
+
+      if (!isUnique) {
+        updatedTree.push({ ...node });
+      }
+    } else {
+      updatedTree.push({
+        ...node,
+        children: node.children
+          ? deleteCategoryByUniqueID(node.children, id, originalTree)
+          : undefined,
+      });
+    }
+  }
+
+  return updatedTree;
+};
+console.log(
+  "deleteCategoryByUniqueID",
+  JSON.stringify(deleteCategoryByUniqueID(tree, 3, tree), null, 2)
+);

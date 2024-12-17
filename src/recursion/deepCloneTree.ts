@@ -8,3 +8,18 @@ export const deepCloneTree = (tree: Category[]): Category[] => {
 };
 
 // console.log("deepCloneTree2", JSON.stringify(deepCloneTree(tree), null, 2));
+
+export const deepCloneTree2 = (tree: Category[]): Category[] => {
+  let result: Category[] = [];
+
+  for (let i = 0; i < tree.length; i++) {
+    result.push({
+      ...tree[i],
+      children: tree[i].children
+        ? deepCloneTree2(tree[i].children as Category[])
+        : undefined,
+    });
+  }
+
+  return result;
+};
